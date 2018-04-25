@@ -98,6 +98,8 @@ import org.json.JSONObject;
  * Main class program starts from here.
  */
 public class MainActivity extends AppCompatActivity {
+
+    public static MainActivity singleInstance;
     private final int CacheSize = 52428800; // 50MB
     private final int MinFreeSpace = 2048; // 2MB
     private static final long maxMem = Runtime.getRuntime().maxMemory();
@@ -191,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     private int oneIconToolbar;
     private boolean phone;
     private DateFormat dateFormat;
-    public  InterstitialAd mInterstitialAd;
+    public static InterstitialAd mInterstitialAd;
     /**
      * First configure the Universal Image Downloader,
      * then we set the main layout to be activity_main.xml
@@ -204,9 +206,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        singleInstance = this;
 
         mTitle = mDrawerTitle = getTitle();
         mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
@@ -476,8 +480,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public  void showInterstitial() {
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+    public  static void showInterstitial() {
+
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
 

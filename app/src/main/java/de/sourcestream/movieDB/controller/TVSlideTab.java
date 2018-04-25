@@ -162,6 +162,7 @@ public class TVSlideTab extends Fragment implements ObservableScrollViewCallback
 
         @Override
         public void onPageSelected(int position) {
+            MainActivity.singleInstance.showInterstitial();
             // Finds the current fragment and updates the list if needed
             // On orientation change loses reference to fragments, that's why every time we find our fragment.
             if (MainActivity.getMaxMem() / 1048576 <= 20) {
